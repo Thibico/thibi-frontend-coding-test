@@ -26,17 +26,40 @@ interface IHomeProps {
 
 export default function Home({ data }: IHomeProps) {
   const { t } = useTranslation('common');
-  const [alphabet, setAlphabet] = useState('A');
+  const [alphabet, setAlphabet] = useState('B');
 
-  const selectedGlossaries = useMemo(
-    () =>
-      data.filter(
-        (glossary) => glossary.attributes.en_term[0].toLowerCase() === alphabet.toLowerCase()
-      ),
-    [alphabet, data]
-  );
+  /**I assumed that "#" sign is for glossaries which start with non-alphabet letter*/
+  const { alphabeticalGlossaries, nonAlphabeticalGlossaries } = useMemo(() => {
+    const glossaries = data.reduce(
+      (accumulator, currentValue) => {
+        if (/^[a-zA-Z]$/.test(currentValue.attributes.en_term[0])) {
+          accumulator.alphabeticalGlossaries.push(currentValue);
+        } else {
+          accumulator.nonAlphabeticalGlossaries.push(currentValue);
+        }
+        return accumulator;
+      },
+      {
+        alphabeticalGlossaries: [] as ISingleGlossary[],
+        nonAlphabeticalGlossaries: [] as ISingleGlossary[],
+      }
+    );
 
-  console.log(data);
+    //Non-Alphabetical Glossaries will be sorted only once
+    glossaries.nonAlphabeticalGlossaries.sort((a, b) =>
+      a.attributes.en_term.localeCompare(b.attributes.en_term)
+    );
+
+    return glossaries;
+  }, [data]);
+
+  const selectedGlossaries = useMemo(() => {
+    return alphabet === '#'
+      ? nonAlphabeticalGlossaries
+      : alphabeticalGlossaries
+          .filter((glossary) => glossary.attributes.en_term[0].toUpperCase() === alphabet)
+          .sort((a, b) => a.attributes.en_term.localeCompare(b.attributes.en_term));
+  }, [alphabet, nonAlphabeticalGlossaries, alphabeticalGlossaries]);
 
   return (
     <>
