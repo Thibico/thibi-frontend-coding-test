@@ -24,26 +24,27 @@ export interface INavBar {
 
 const NavBar = ({ logo, menuItems, bgColor, textColor = 'white' }: INavBar) => {
   return (
-    <nav className={`bg-${bgColor}`}>
-      <div className="container px-4 mx-auto sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+    <nav className={`bg-${bgColor} w-full block`}>
+      <div className="mx-auto w-full px-5 py-[30px] lg:py-14 lg:px-12">
+        <div className="flex items-center justify-between">
           <div className="flex items-center">
             <div className="flex-shrink-0">
               <img
-                className="block w-auto h-8 lg:hidden"
+                className="block w-[137px] lg:hidden"
                 src={logo.mobile}
                 alt={logo.alt}
                 loading="lazy"
               />
+
               <img
-                className="hidden w-auto h-8 lg:block"
+                className="hidden w-auto lg:block"
                 src={logo.desktop}
                 alt={logo.alt}
                 loading="lazy"
               />
             </div>
           </div>
-          <div className="sm:ml-6 sm:block">
+          <div className="">
             {/* Right Menuj */}
             <LanguageToggle textColor={textColor} />
           </div>

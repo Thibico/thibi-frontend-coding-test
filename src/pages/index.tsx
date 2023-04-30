@@ -26,51 +26,38 @@ interface IHomeProps {
 
 export default function Home({ data }: IHomeProps) {
   const { t } = useTranslation('common');
-  const [alphabet, setAlphabet] = useState('B');
+  const [selectedAlphabet, setSelectedAlphabet] = useState('B');
 
   /**I assumed that "#" sign is for glossaries which start with non-alphabet letter*/
-  const { alphabeticalGlossaries, nonAlphabeticalGlossaries } = useMemo(() => {
-    const glossaries = data.reduce(
-      (accumulator, currentValue) => {
-        if (/^[a-zA-Z]$/.test(currentValue.attributes.en_term[0])) {
-          accumulator.alphabeticalGlossaries.push(currentValue);
-        } else {
-          accumulator.nonAlphabeticalGlossaries.push(currentValue);
-        }
-        return accumulator;
-      },
-      {
-        alphabeticalGlossaries: [] as ISingleGlossary[],
-        nonAlphabeticalGlossaries: [] as ISingleGlossary[],
-      }
-    );
-
-    //Non-Alphabetical Glossaries will be sorted only once
-    glossaries.nonAlphabeticalGlossaries.sort((a, b) =>
-      a.attributes.en_term.localeCompare(b.attributes.en_term)
-    );
-
-    return glossaries;
-  }, [data]);
-
   const selectedGlossaries = useMemo(() => {
-    return alphabet === '#'
-      ? nonAlphabeticalGlossaries
-      : alphabeticalGlossaries
-          .filter((glossary) => glossary.attributes.en_term[0].toUpperCase() === alphabet)
-          .sort((a, b) => a.attributes.en_term.localeCompare(b.attributes.en_term));
-  }, [alphabet, nonAlphabeticalGlossaries, alphabeticalGlossaries]);
+    return selectedAlphabet === '#'
+      ? data
+          .filter((glossary) => !/^[a-zA-Z]$/.test(glossary.attributes.en_term[0]))
+          .sort((a, b) =>
+            a.attributes.en_term.localeCompare(b.attributes.en_term, 'en', { sensitivity: 'base' })
+          )
+      : data
+          .filter((glossary) => glossary.attributes.en_term[0].toUpperCase() === selectedAlphabet)
+          .sort((a, b) =>
+            a.attributes.en_term.localeCompare(b.attributes.en_term, 'en', { sensitivity: 'base' })
+          );
+  }, [selectedAlphabet, data]);
+
+  const changeSelectedAlphabet = (param: string) => {
+    setSelectedAlphabet(param);
+  };
 
   return (
     <>
       <Layout>
-        <div className="h-full bg-slate-300 p-10">
-          <div className="container px-4 mx-auto">
-            <GlossaryDefination />
-            <AlphabeticalList />
-            <Glossaries selectedGlossaries={selectedGlossaries} />
-            <ScrollTopBtn />
-          </div>
+        <div className="h-full bg-white px-5 lg:px-8">
+          <GlossaryDefination />
+          <AlphabeticalList
+            changeSelectedAlphabet={changeSelectedAlphabet}
+            selectedAlphabet={selectedAlphabet}
+          />
+          <Glossaries selectedAlphabet={selectedAlphabet} selectedGlossaries={selectedGlossaries} />
+          <ScrollTopBtn />
         </div>
       </Layout>
     </>
