@@ -1,11 +1,11 @@
 const layoutConfig = {
   logo: {
-    desktop: '/thibi-logo.svg',
+    desktop: '/thibi-logo-desktop.svg',
     mobile: '/thibi-logo.svg',
     alt: 'Thibi Logo',
   },
-  locales: ["en", "mm"], // Get from i18n.json
-  defaultLocale: "en", // Get from i18n.json
+  locales: ['en', 'mm'], // Get from i18n.json
+  defaultLocale: 'en', // Get from i18n.json
   navBar: {
     bgColor: 'accent',
     textColor: 'white',

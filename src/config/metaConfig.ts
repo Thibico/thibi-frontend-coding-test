@@ -1,6 +1,6 @@
 const metaData = {
-  siteName: 'NextJs Starter Template',
-  description: 'NextJs Starter Template Description',
+  siteName: 'Thibi Glossaries',
+  description: "Hein Htet Aung's Coding Test Submission",
   siteUrl: `https://site.thibi.co`,
   siteImage: 'android-chrome-512x512.png',
   siteContent: 'NextJS, Template',

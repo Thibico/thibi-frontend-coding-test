@@ -1,6 +1,9 @@
 {
   "hello": "Hello world",
-  "en" : "English",
-  "mm" : "မြန်မာ",
-  "dummy-text" : "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates omnis natus temporibus magnam nisi at nostrum commodi ea autem, error dolores laboriosam ipsam maxime corporis quae, reprehenderit ipsum quasi harum!"
+  "en": "English",
+  "mm": "မြန်မာ",
+  "glossary": "glossary",
+  "glossary-definition": "An alphabetical list of words relating to a specific subject, text, or dialect, with explanations; a brief dictionary.",
+  "scroll-to-top": "Scroll Top",
+  "dummy-text": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates omnis natus temporibus magnam nisi at nostrum commodi ea autem, error dolores laboriosam ipsam maxime corporis quae, reprehenderit ipsum quasi harum!"
 }

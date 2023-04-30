@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import useTranslation from 'next-translate/useTranslation';
 import layoutConfig from '@/config/layoutConfig';
 
-interface ILanguageToggle  {
+interface ILanguageToggle {
   textColor?: string;
 }
 
@@ -14,23 +14,27 @@ const LanguageToggle = ({ textColor = 'white' }: ILanguageToggle) => {
   const { t } = useTranslation('common');
 
   return (
-    <div className = {`text-${textColor}`}>
-      {layoutConfig.locales.map((lng, index) => {
-        return (
-          <div key={index}>
-            <span
-              key={lng}
-              className={`text-${textColor} hover:font-bold p-1 text-midgrey text-sm cursor-pointer ${
-                locale === lng ? 'font-bold' : ''
-              }`}
-              onClick={() => setLanguage(lng)}
+    <div className={`text-${textColor} font-padauk`}>
+      <div className="flex gap-2">
+        {layoutConfig.locales.map((lng, index) => {
+          return (
+            <div
+              key={index}
+              className="flex gap-2 text-white text-[18px] lg:text-[28px] lg:leading-[44px] leading-7 "
             >
-              {t(lng)}
-            </span>
-            {index + 1 < layoutConfig.locales.length ? '|' : ''}
-          </div>
-        );
-      })}
+              <div
+                className={`text-${textColor} hover:font-bold capitalize cursor-pointer ${
+                  locale === lng ? 'font-bold' : ''
+                }`}
+                onClick={() => setLanguage(lng)}
+              >
+                {lng === 'en' ? 'en' : t(lng)}
+              </div>
+              {index + 1 < layoutConfig.locales.length && <div>|</div>}
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };
